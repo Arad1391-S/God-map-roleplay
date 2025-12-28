@@ -5,28 +5,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GOD MAP RolePlay</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;500;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg:#0b0f19;
-  --card:#11162a;
+  --bg:#05070d;
+  --glass:rgba(255,255,255,.06);
+  --border:rgba(255,255,255,.12);
   --primary:#7c4dff;
   --secondary:#00e5ff;
   --text:#ffffff;
   --muted:#a9acc7;
 }
 
-*{box-sizing:border-box}
-
-body{
+*{
+  box-sizing:border-box;
   margin:0;
-  font-family:Vazirmatn,sans-serif;
-  background:linear-gradient(180deg,#0b0f19,#05070d);
-  color:var(--text);
+  padding:0;
 }
 
-/* AUTH */
+body{
+  font-family:Vazirmatn,sans-serif;
+  background:
+    radial-gradient(circle at top,#1a1f3c,#05070d 60%);
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(40px)}
+  to{opacity:1;transform:none}
+}
+
+@keyframes glow{
+  0%{box-shadow:0 0 10px var(--primary)}
+  50%{box-shadow:0 0 30px var(--primary)}
+  100%{box-shadow:0 0 10px var(--primary)}
+}
+
+/* ===== AUTH ===== */
 #auth{
   min-height:100vh;
   display:flex;
@@ -35,95 +53,124 @@ body{
 }
 
 .auth-box{
-  background:var(--card);
+  background:var(--glass);
+  backdrop-filter:blur(20px);
+  border:1px solid var(--border);
+  border-radius:26px;
+  padding:45px 35px;
   width:100%;
   max-width:420px;
-  padding:40px;
-  border-radius:20px;
   text-align:center;
+  animation:fadeUp .8s ease;
 }
 
 .auth-box h1{
   font-family:Orbitron;
   color:var(--primary);
+  margin-bottom:10px;
 }
 
 .auth-box p{
   color:var(--muted);
-  margin-bottom:20px;
+  margin-bottom:25px;
+  font-size:.95rem;
 }
 
 .auth-box input{
   width:100%;
-  padding:14px;
+  padding:15px;
   margin-bottom:14px;
-  border-radius:12px;
-  border:none;
-  background:#0c1124;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background:rgba(0,0,0,.4);
   color:white;
   font-family:Vazirmatn;
 }
 
 .auth-box button{
   width:100%;
-  padding:14px;
+  padding:15px;
   border:none;
-  border-radius:12px;
-  background:var(--primary);
+  border-radius:14px;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
   color:white;
   font-family:Orbitron;
   cursor:pointer;
+  animation:glow 3s infinite;
 }
 
 .switch{
-  margin-top:18px;
-  font-size:.9rem;
+  margin-top:20px;
   color:var(--secondary);
   cursor:pointer;
+  font-size:.9rem;
 }
 
-/* SITE */
+/* ===== SITE ===== */
 #site{display:none}
 
+.logout{
+  position:fixed;
+  top:20px;
+  left:20px;
+  background:#ff5252;
+  border:none;
+  padding:10px 18px;
+  border-radius:14px;
+  color:white;
+  font-family:Orbitron;
+  cursor:pointer;
+  z-index:10;
+}
+
+/* ===== HEADER ===== */
 header{
   text-align:center;
-  padding:80px 20px 60px;
+  padding:100px 20px 80px;
+  animation:fadeUp 1s ease;
 }
 
 header h1{
   font-family:Orbitron;
+  font-size:3.5rem;
   color:var(--primary);
-  font-size:3.2rem;
 }
 
 header h3{
-  margin-top:15px;
-  font-weight:500;
+  margin-top:20px;
   color:var(--secondary);
+  font-weight:600;
 }
 
 header p{
-  max-width:700px;
-  margin:25px auto 0;
+  max-width:720px;
+  margin:30px auto 0;
   color:var(--muted);
-  font-size:1.05rem;
+  line-height:1.9;
 }
 
 .ip-box{
-  margin-top:30px;
-  background:var(--card);
+  margin-top:40px;
   display:inline-block;
-  padding:14px 30px;
-  border-radius:14px;
+  padding:16px 34px;
+  border-radius:18px;
+  background:var(--glass);
   border:1px solid var(--primary);
   cursor:pointer;
   font-family:Orbitron;
+  transition:.3s;
 }
 
+.ip-box:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 25px var(--primary);
+}
+
+/* ===== SECTIONS ===== */
 section{
-  max-width:1100px;
+  max-width:1150px;
   margin:auto;
-  padding:60px 20px;
+  padding:80px 20px;
 }
 
 section h2{
@@ -135,40 +182,60 @@ section h2{
 .cards{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:25px;
-  margin-top:40px;
+  gap:30px;
+  margin-top:50px;
 }
 
 .card{
-  background:var(--card);
-  padding:30px;
-  border-radius:18px;
+  background:var(--glass);
+  border:1px solid var(--border);
+  backdrop-filter:blur(14px);
+  padding:35px;
+  border-radius:24px;
   text-align:center;
-  transition:.3s;
+  transition:.4s;
+  animation:fadeUp 1s ease;
 }
 
 .card:hover{
-  transform:translateY(-6px);
+  transform:translateY(-12px) scale(1.03);
+  box-shadow:0 20px 40px rgba(0,0,0,.5);
 }
 
-.logout{
-  position:fixed;
-  top:20px;
-  left:20px;
-  background:#ff5252;
-  border:none;
-  padding:10px 18px;
-  border-radius:12px;
+/* ===== DISCORD ===== */
+.discord{
+  text-align:center;
+}
+
+.discord a{
+  display:inline-block;
+  margin-top:25px;
+  background:#5865F2;
+  padding:18px 40px;
+  border-radius:18px;
   color:white;
-  cursor:pointer;
+  text-decoration:none;
   font-family:Orbitron;
+  transition:.3s;
 }
 
+.discord a:hover{
+  transform:scale(1.08);
+  box-shadow:0 0 30px #5865F2;
+}
+
+/* ===== FOOTER ===== */
 footer{
   text-align:center;
-  padding:35px;
+  padding:40px 20px;
   color:var(--muted);
   font-size:.9rem;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:600px){
+  header h1{font-size:2.6rem}
+  header h3{font-size:1.1rem}
 }
 </style>
 </head>
@@ -201,9 +268,9 @@ footer{
   <h3>گاد مپ، مقصدی برای سرگرمی</h3>
 
   <p>
-    یک جامعه صمیمی و دوستانه از بازیکن‌های ماینکرفت  
+    جامعه‌ای صمیمی، دوستانه و پرانرژی  
     <br>
-    جایی برای خلاقیت، تعامل، دوستی و تجربه‌ای متفاوت از بازی
+    جایی برای ساختن داستان‌ها، رفاقت‌ها و لحظه‌های فراموش‌نشدنی
   </p>
 
   <div class="ip-box" onclick="copyIP()">
@@ -215,29 +282,26 @@ footer{
   <h2>✨ چرا GOD MAP؟</h2>
   <div class="cards">
     <div class="card">
-      🤝 جامعه‌ای گرم و دوستانه  
+      🤝 جامعه‌ای گرم و واقعی  
       <br><br>
-      جایی که همه با احترام و رفاقت بازی می‌کنن
+      احترام، تعامل و دوستی اولویت اول ماست
     </div>
     <div class="card">
-      🎮 تجربه‌ای متفاوت  
+      🎮 فان و رول‌پلی خالص  
       <br><br>
-      تمرکز روی فان، تعامل و لذت واقعی از بازی
+      تمرکز روی لذت واقعی از بازی
     </div>
     <div class="card">
-      🚀 همیشه در حال پیشرفت  
+      🚀 آینده‌دار و پویا  
       <br><br>
-      آپدیت‌های منظم و گوش دادن به پیشنهاد پلیرها
+      آپدیت‌های منظم و گوش دادن به پلیرها
     </div>
   </div>
 </section>
 
-<section style="text-align:center">
-  <h2>💬 دیسکورد</h2><br>
-  <a href="YOUR_DISCORD_LINK" target="_blank"
-     style="background:#5865F2;padding:16px 32px;border-radius:14px;color:white;text-decoration:none;font-family:Orbitron">
-     Join Discord
-  </a>
+<section class="discord">
+  <h2>💬 دیسکورد سرور</h2>
+  <a href="YOUR_DISCORD_LINK" target="_blank">Join Discord</a>
 </section>
 
 <footer>
@@ -250,8 +314,7 @@ let isRegister=false;
 
 function toggleAuth(){
   isRegister=!isRegister;
-  document.getElementById("authDesc").innerText=
-    isRegister?"ثبت‌نام با یوزرنیم ماینکرفت":"ورود یا ثبت‌نام با یوزرنیم ماینکرفت";
+  authDesc.innerText=isRegister?"ثبت‌نام با یوزرنیم ماینکرفت":"ورود یا ثبت‌نام با یوزرنیم ماینکرفت";
   document.querySelector(".switch").innerText=
     isRegister?"حساب داری؟ ورود":"ثبت نام نکردی؟ ثبت‌نام کن";
 }
@@ -267,8 +330,7 @@ function submitAuth(){
 }
 
 function loadUser(){
-  const u=localStorage.getItem("gm_user");
-  if(u){
+  if(localStorage.getItem("gm_user")){
     auth.style.display="none";
     site.style.display="block";
   }
