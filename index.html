@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GOD MAP RolePlay</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Vazirmatn:wght@300;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;500;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -26,46 +26,44 @@ body{
   color:var(--text);
 }
 
-/* LOGIN */
-#loginPage{
+/* AUTH */
+#auth{
   min-height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
 }
 
-.login-box{
+.auth-box{
   background:var(--card);
-  padding:40px;
   width:100%;
-  max-width:380px;
+  max-width:400px;
+  padding:35px;
   border-radius:18px;
   text-align:center;
-  border:1px solid rgba(255,255,255,.05);
 }
 
-.login-box h1{
+.auth-box h1{
   font-family:Orbitron;
   color:var(--primary);
 }
 
-.login-box p{
+.auth-box p{
   color:var(--muted);
-  margin-bottom:25px;
+  margin-bottom:20px;
 }
 
-.login-box input{
+.auth-box input{
   width:100%;
   padding:14px;
-  margin-bottom:15px;
+  margin-bottom:12px;
   border-radius:10px;
   border:none;
-  outline:none;
   background:#0c1124;
   color:white;
 }
 
-.login-box button{
+.auth-box button{
   width:100%;
   padding:14px;
   border:none;
@@ -76,20 +74,19 @@ body{
   cursor:pointer;
 }
 
-.login-box small{
-  display:block;
+.switch{
   margin-top:15px;
-  color:#777;
+  font-size:.9rem;
+  color:var(--secondary);
+  cursor:pointer;
 }
 
-/* MAIN SITE */
-#site{
-  display:none;
-}
+/* SITE */
+#site{display:none}
 
 header{
-  padding:60px 20px;
   text-align:center;
+  padding:60px 20px;
 }
 
 header h1{
@@ -109,9 +106,9 @@ header h1{
 }
 
 section{
-  padding:60px 20px;
   max-width:1100px;
   margin:auto;
+  padding:60px 20px;
 }
 
 section h2{
@@ -131,23 +128,12 @@ section h2{
   background:var(--card);
   padding:25px;
   border-radius:15px;
-  transition:.3s;
-}
-
-.card:hover{
-  transform:translateY(-5px);
-}
-
-footer{
-  text-align:center;
-  padding:30px;
-  color:var(--muted);
 }
 
 .logout{
   position:fixed;
   top:20px;
-  right:20px;
+  left:20px;
   background:#ff5252;
   border:none;
   padding:10px 18px;
@@ -156,25 +142,30 @@ footer{
   cursor:pointer;
 }
 
-@media(max-width:600px){
-  header h1{font-size:2.2rem}
+footer{
+  text-align:center;
+  padding:30px;
+  color:var(--muted);
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div id="loginPage">
-  <div class="login-box">
-    <h1>GOD MAP</h1>
-    <p>Login with your Minecraft Username</p>
+<!-- AUTH -->
+<div id="auth">
+  <div class="auth-box">
+    <h1 id="authTitle">ورود | Login</h1>
+    <p id="authDesc">با یوزرنیم ماینکرفت وارد شو</p>
 
     <input id="username" placeholder="Minecraft Username">
     <input id="password" type="password" placeholder="Password">
 
-    <button onclick="login()">LOGIN</button>
-    <small>RolePlay Server Access</small>
+    <button onclick="submitAuth()">ادامه | Continue</button>
+
+    <div class="switch" onclick="toggleAuth()">
+      ثبت نام نکردی؟ Register
+    </div>
   </div>
 </div>
 
@@ -184,7 +175,7 @@ footer{
 
 <header>
   <h1>GOD MAP RolePlay</h1>
-  <p>Welcome <b id="playerName"></b> 👋</p>
+  <p>خوش اومدی <b id="player"></b> 👋 | Welcome</p>
 
   <div class="ip-box" onclick="copyIP()">
     IP: <span id="serverIP">YOUR_SERVER_IP</span>
@@ -192,19 +183,20 @@ footer{
 </header>
 
 <section>
-  <h2>🎭 RolePlay System</h2>
+  <h2>🎭 رول‌پلی | RolePlay</h2>
   <div class="cards">
-    <div class="card">Police, Doctor, Mafia, Business</div>
-    <div class="card">Real Economy & Story Mode</div>
-    <div class="card">Discord Voice RolePlay</div>
+    <div class="card">👮 پلیس، دکتر، مافیا، بیزینس</div>
+    <div class="card">🏙️ شهر اختصاصی با اقتصاد واقعی</div>
+    <div class="card">🎙️ رول‌پلی صوتی (Discord RP)</div>
   </div>
 </section>
 
 <section style="text-align:center">
-  <h2>💬 Discord</h2>
-  <br>
-  <a style="background:#5865F2;padding:15px 30px;border-radius:12px;color:white;text-decoration:none"
-     href="YOUR_DISCORD_LINK" target="_blank">Join Discord</a>
+  <h2>💬 دیسکورد | Discord</h2><br>
+  <a href="YOUR_DISCORD_LINK" target="_blank"
+     style="background:#5865F2;padding:15px 30px;border-radius:12px;color:white;text-decoration:none">
+     Join Discord
+  </a>
 </section>
 
 <footer>
@@ -213,10 +205,21 @@ footer{
 </div>
 
 <script>
-function login(){
-  const u=document.getElementById("username").value;
-  const p=document.getElementById("password").value;
-  if(!u||!p) return alert("Fill all fields");
+let isRegister=false;
+
+function toggleAuth(){
+  isRegister=!isRegister;
+  document.getElementById("authTitle").innerText=
+    isRegister?"ثبت نام | Register":"ورود | Login";
+  document.querySelector(".switch").innerText=
+    isRegister?"حساب داری؟ Login":"ثبت نام نکردی؟ Register";
+}
+
+function submitAuth(){
+  const u=username.value.trim();
+  const p=password.value.trim();
+  if(!u||!p) return alert("همه فیلدها رو پر کن");
+
   localStorage.setItem("gm_user",u);
   localStorage.setItem("gm_pass",p);
   loadUser();
@@ -225,9 +228,9 @@ function login(){
 function loadUser(){
   const u=localStorage.getItem("gm_user");
   if(u){
-    document.getElementById("loginPage").style.display="none";
-    document.getElementById("site").style.display="block";
-    document.getElementById("playerName").innerText=u;
+    auth.style.display="none";
+    site.style.display="block";
+    player.innerText=u;
   }
 }
 
@@ -237,8 +240,8 @@ function logout(){
 }
 
 function copyIP(){
-  navigator.clipboard.writeText(document.getElementById("serverIP").innerText);
-  alert("IP Copied");
+  navigator.clipboard.writeText(serverIP.innerText);
+  alert("IP کپی شد");
 }
 
 loadUser();
