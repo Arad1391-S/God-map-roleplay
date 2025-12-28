@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-/* ===== GLOBAL ===== */
+/* ===== RESET & GLOBAL ===== */
 *{
   box-sizing:border-box;
   margin:0;
@@ -16,18 +16,25 @@
   font-family:Vazirmatn, sans-serif;
 }
 
+html,body{
+  height:100%;
+}
+
 body{
   background:#060812;
   color:#fff;
-  min-height:100vh;
+  overflow:hidden; /* مهم: جلوگیری از اسکرول */
 }
 
-/* ===== AUTH ===== */
+/* ===== AUTH PAGE ===== */
 #auth{
-  min-height:100vh;
+  position:fixed;
+  inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
+  background:#060812;
+  z-index:999;
 }
 
 .auth-box{
@@ -78,25 +85,11 @@ body{
   cursor:pointer;
 }
 
-/* ===== SITE LAYOUT ===== */
+/* ===== SITE ===== */
 #site{
   display:none;
   min-height:100vh;
-  display:flex;
   flex-direction:column;
-}
-
-.logout{
-  position:fixed;
-  top:15px;
-  left:15px;
-  padding:8px 14px;
-  background:#ff5252;
-  border:none;
-  border-radius:10px;
-  color:white;
-  font-family:Orbitron;
-  cursor:pointer;
 }
 
 /* ===== HEADER ===== */
@@ -175,6 +168,20 @@ section h2{
   font-family:Orbitron;
 }
 
+/* ===== LOGOUT ===== */
+.logout{
+  position:fixed;
+  top:15px;
+  left:15px;
+  padding:8px 14px;
+  background:#ff5252;
+  border:none;
+  border-radius:10px;
+  color:white;
+  font-family:Orbitron;
+  cursor:pointer;
+}
+
 /* ===== FOOTER ===== */
 footer{
   margin-top:auto;
@@ -193,7 +200,7 @@ footer{
 
 <body>
 
-<!-- AUTH -->
+<!-- AUTH ONLY -->
 <div id="auth">
   <div class="auth-box">
     <h1>GOD MAP</h1>
@@ -208,17 +215,12 @@ footer{
 
     <button onclick="submitAuth()">ادامه</button>
 
-    <div class="switch" onclick="toggleAuth()">
-      ثبت نام نکردی؟ ثبت‌نام کن
-    </div>
-
-    <div class="switch" onclick="resetAccount()">
-      رمز رو فراموش کردی؟
-    </div>
+    <div class="switch" onclick="toggleAuth()">ثبت‌نام</div>
+    <div class="switch" onclick="resetAccount()">فراموشی رمز</div>
   </div>
 </div>
 
-<!-- SITE -->
+<!-- SITE (LOCKED) -->
 <div id="site">
 <button class="logout" onclick="logout()">Logout</button>
 
@@ -255,38 +257,29 @@ footer{
 </div>
 
 <script>
-let isRegister=false;
-
 function toggleAuth(){
-  isRegister=!isRegister;
-  authDesc.innerText=isRegister?"ثبت‌نام با یوزرنیم ماینکرفت":"ورود یا ثبت‌نام با یوزرنیم ماینکرفت";
+  authDesc.innerText="ثبت‌نام با یوزرنیم ماینکرفت";
 }
 
 function submitAuth(){
   const u=username.value.trim();
   const p=password.value.trim();
-
   if(!u||!p) return alert("همه فیلدها رو پر کن");
 
   const su=localStorage.getItem("gm_user");
   const sp=localStorage.getItem("gm_pass");
 
-  if(su){
-    if(u===su && p===sp){
-      loadUser();
-    }else{
-      alert("اطلاعات اشتباه است");
-    }
-  }else{
-    localStorage.setItem("gm_user",u);
-    localStorage.setItem("gm_pass",p);
-    loadUser();
-  }
+  if(su && (u!==su || p!==sp)) return alert("اطلاعات اشتباه است");
+
+  localStorage.setItem("gm_user",u);
+  localStorage.setItem("gm_pass",p);
+  unlock();
 }
 
-function loadUser(){
+function unlock(){
   auth.style.display="none";
   site.style.display="flex";
+  document.body.style.overflow="auto";
 }
 
 function logout(){
@@ -306,8 +299,8 @@ function copyIP(){
   alert("IP کپی شد");
 }
 
-if(localStorage.getItem("gm_user")) loadUser();
+if(localStorage.getItem("gm_user")) unlock();
 </script>
 
 </body>
-  </html>
+</html>
